@@ -22,7 +22,7 @@ const Customize2 = () => {
         let formData = new FormData();
         formData.append("assistantName", assistantName);
         formData.append("assistantImage", backendImage);
-        result = await axios.post(`${serverUrl}/api/user/update`, formData, {
+        result = await axios.post(`${https://vocalvista-backend.onrender.com}/api/user/update`, formData, {
           withCredentials: true,
           headers: { "Content-Type": "multipart/form-data" },
         });
