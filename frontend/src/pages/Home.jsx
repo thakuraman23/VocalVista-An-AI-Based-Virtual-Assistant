@@ -20,6 +20,7 @@ const Home = () => {
   const synth = window.speechSynthesis;
   const fallbackRef = useRef(null);
   const isRecognizingRef = useRef(false);
+  const preOpenedTabRef = useRef(null);
 
   const handleLogout = async () => {
     try {
@@ -71,53 +72,69 @@ const Home = () => {
     setAiText(response);
     speak(response);
 
+    if (['google_search', 'youtube_search', 'youtube_play', 'youtube_open', 'calculator_open', 
+         'instagram_open', 'facebook_open', 'weather_show', 'weather_forecast', 'news', 
+         'wikipedia_search', 'wikipedia_open', 'wikipedia_search_and_summary'].includes(type)) {
+      
+      preOpenedTabRef.current = window.open('about:blank', '_blank');
+      
+      setTimeout(() => {
+        if (preOpenedTabRef.current) {
+          switch (type) {
+            case 'google_search':
+              preOpenedTabRef.current.location.href = `https://www.google.com/search?q=${encodeURIComponent(userInput)}`;
+              break;
+            case 'youtube_search':
+            case 'youtube_play':
+              preOpenedTabRef.current.location.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(userInput)}`;
+              break;
+            case 'youtube_open':
+              preOpenedTabRef.current.location.href = 'https://www.youtube.com/';
+              break;
+            case 'calculator_open':
+              preOpenedTabRef.current.location.href = `https://www.google.com/search?q=calculator`;
+              break;
+            case 'instagram_open':
+              preOpenedTabRef.current.location.href = `https://www.instagram.com/`;
+              break;
+            case 'facebook_open':
+              preOpenedTabRef.current.location.href = `https://www.facebook.com/`;
+              break;
+            case 'weather_show':
+              preOpenedTabRef.current.location.href = `https://www.google.com/search?q=weather`;
+              break;
+            case 'weather_forecast':
+              preOpenedTabRef.current.location.href = `https://www.google.com/search?q=weather+forecast+${encodeURIComponent(userInput)}`;
+              break;
+            case 'news':
+              preOpenedTabRef.current.location.href = userInput ? `https://news.google.com/search?q=${encodeURIComponent(userInput)}` : `https://news.google.com/`;
+              break;
+            case 'wikipedia_search':
+              preOpenedTabRef.current.location.href = `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(userInput)}`;
+              break;
+            case 'wikipedia_open':
+              preOpenedTabRef.current.location.href = userInput.includes('http') ? userInput : `https://en.wikipedia.org/wiki/${encodeURIComponent(userInput)}`;
+              break;
+            case 'wikipedia_search_and_summary':
+              preOpenedTabRef.current.location.href = `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(userInput)}`;
+              break;
+            default:
+              preOpenedTabRef.current.close(); 
+              break;
+          }
+          preOpenedTabRef.current = null;
+        }
+      }, 3000); 
+    }
+
     switch (type) {
       case 'general':
-        break;
-      case 'google_search':
-        window.open(`https://www.google.com/search?q=${encodeURIComponent(userInput)}`, '_blank');
-        break;
-      case 'youtube_search':
-      case 'youtube_play':
-        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(userInput)}`, '_blank');
-        break;
-      case 'youtube_open':
-        window.open('https://www.youtube.com/', '_blank');
-        break;
-      case 'calculator_open':
-        window.open(`https://www.google.com/search?q=calculator`, '_blank');
-        break;
-      case 'instagram_open':
-        window.open(`https://www.instagram.com/`, '_blank');
-        break;
-      case 'facebook_open':
-        window.open(`https://www.facebook.com/`, '_blank');
-        break;
-      case 'weather_show':
-        window.open(`https://www.google.com/search?q=weather`, '_blank');
-        break;
-      case 'weather_forecast':
-        window.open(`https://www.google.com/search?q=weather+forecast+${encodeURIComponent(userInput)}`, '_blank');
-        break;
-      case 'news':
-        window.open(userInput ? `https://news.google.com/search?q=${encodeURIComponent(userInput)}` : `https://news.google.com/`, '_blank');
-        break;
-      case 'wikipedia_search':
-        window.open(`https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(userInput)}`, '_blank');
-        break;
-      case 'wikipedia_summary':
-        break;
-      case 'wikipedia_open':
-        window.open(userInput.includes('http') ? userInput : `https://en.wikipedia.org/wiki/${encodeURIComponent(userInput)}`, '_blank');
-        break;
-      case 'wikipedia_search_and_summary':
-        window.open(`https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(userInput)}`, '_blank');
-        break;
       case 'get_date':
       case 'get_time':
       case 'get_day':
       case 'get_month':
       case 'get_year':
+      case 'wikipedia_summary':
         break;
       case 'mock_interview':
         setInterviewState({
