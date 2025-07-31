@@ -33,19 +33,18 @@
 
 ## 📸 Screenshots
 
-> *(You can add actual screenshots here if you want, like a login page, voice interaction screen, etc.)*
+<img width="1668" height="885" alt="image" src="https://github.com/user-attachments/assets/93f548d0-9576-4e1f-a904-f466739c9334" />
 
----
+<img width="1512" height="852" alt="image" src="https://github.com/user-attachments/assets/dc418f1b-c93d-4275-8a86-3c9c779c4ff0" />
+
+<img width="1752" height="840" alt="image" src="https://github.com/user-attachments/assets/420cf723-4cb4-40a3-82b0-e10b325fbcdc" />
+
+
+
 
 ## 🌐 Live Demo
 
-[🔗 Hosted Frontend URL](https://your-frontend.vercel.app)  
-[🔗 Hosted Backend URL](https://your-backend.onrender.com)
-
-> ⚠️ Replace the links above with your actual hosted URLs.
-
----
-
+[🔗 Hosted URL]()  
 ## ⚙️ Installation (Local Setup)
 
 ### 1. Clone the Repository
